@@ -16,6 +16,12 @@ if [ ! -f ~/.claude/settings.json ]; then
   echo "  -> 已创建 ~/.claude/settings.json，请填入你的 API Token"
 fi
 
+# MCP 服务器配置
+if [ ! -f ~/.claude/.mcp.json ]; then
+  cp "$DOTFILES/claude/.mcp.json" ~/.claude/.mcp.json
+  echo "  -> 已创建 ~/.claude/.mcp.json（MCP 服务器配置）"
+fi
+
 # --- 手动 Skills ---
 mkdir -p ~/.claude/skills
 ln -sfn "$DOTFILES/claude/skills/skill-creator" ~/.claude/skills/skill-creator
@@ -34,4 +40,5 @@ fi
 echo ""
 echo "==> 安装完成！"
 echo "    1. 编辑 ~/.claude/settings.json 填入 API Token"
-echo "    2. 安装 ccswitch 后运行 cccswitch sync"
+echo "    2. 编辑 ~/.claude/.mcp.json 填入 BRAVE_API_KEY 和 GITHUB_TOKEN"
+echo "    3. 安装 ccswitch 后运行 cccswitch sync"
