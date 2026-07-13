@@ -1,0 +1,19 @@
+{
+  "showInTray": true,
+  "minimizeToTrayOnClose": true,
+  "useAppWindowControls": false,
+  "enableClaudePluginIntegration": false,
+  "skipClaudeOnboarding": false,
+  "launchOnStartup": true,
+  "silentStartup": false,
+  "enableLocalProxy": false,
+  "usageConfirmed": true,
+  "enableFailoverToggle": false,
+  "firstRunNoticeConfirmed": true,
+  "commonConfigConfirmed": true,
+  "language": "zh",
+  "currentProviderClaude": "60935385-7dbf-4bb3-9453-171c92aa0d91",
+  "currentProviderCodex": "codex-official",
+  "skillSyncMethod": "auto",
+  "skillStorageLocation": "cc_switch"
+}

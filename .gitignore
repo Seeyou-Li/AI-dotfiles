@@ -1,0 +1,2 @@
+# 忽略包含真实 Token 的 settings.json（使用模板替代）
+claude/settings.json
