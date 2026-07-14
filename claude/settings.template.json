@@ -10,5 +10,18 @@
     "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "deepseek-v4-flash",
     "ANTHROPIC_MODEL": "deepseek-v4-pro"
   },
-  "includeCoAuthoredBy": false
+  "includeCoAuthoredBy": false,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ]
+  }
 }
