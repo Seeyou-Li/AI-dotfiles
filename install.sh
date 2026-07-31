@@ -37,8 +37,16 @@ if [ -d "$DOTFILES/cc-switch/skills" ]; then
   echo "  -> 请手动安装 cc-switch 后运行 'ccswitch sync' 恢复 skills"
 fi
 
+# --- Codex CLI ---
+if [ ! -f ~/.codex/config.toml ]; then
+  mkdir -p ~/.codex
+  cp "$DOTFILES/codex/config.toml" ~/.codex/config.toml
+  echo "  -> 已创建 ~/.codex/config.toml，请填入 API Key"
+fi
+
 echo ""
 echo "==> 安装完成！"
 echo "    1. 编辑 ~/.claude/settings.json 填入 API Token"
-echo "    2. 编辑 ~/.claude/.mcp.json 填入 BRAVE_API_KEY 和 GITHUB_TOKEN"
-echo "    3. 安装 ccswitch 后运行 cccswitch sync"
+echo "    2. 编辑 ~/.claude/.mcp.json 填入 TAVILY_API_KEY 和 GITHUB_TOKEN"
+echo "    3. 编辑 ~/.codex/config.toml 填入 OPENAI_API_KEY"
+echo "    4. 安装 ccswitch 后运行 cccswitch sync"

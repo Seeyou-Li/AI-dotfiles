@@ -1,0 +1,11 @@
+model = "deepseek-v4-pro"
+
+[env]
+OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"
+OPENAI_BASE_URL = "https://api.deepseek.com/v1"
+
+[projects."/home/csg"]
+trust_level = "trusted"
+
+[tui.model_availability_nux]
+"gpt-5.6-sol" = 1
