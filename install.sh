@@ -56,9 +56,17 @@ cp -Lr "$DOTFILES/claude/skills/embedded-code-review" ~/.codex/skills/ 2>/dev/nu
 cp -Lr "$DOTFILES/claude/skills/skill-creator" ~/.codex/skills/ 2>/dev/null || true
 echo "  -> Codex skills 已复制（cc-switch + 手动 skills）"
 
+# --- Continue (VSCode 代码补全) ---
+if [ ! -f ~/.continue/config.yaml ]; then
+  mkdir -p ~/.continue
+  cp "$DOTFILES/continue/config.yaml" ~/.continue/config.yaml
+  echo "  -> 已创建 ~/.continue/config.yaml，请填入 API Key"
+fi
+
 echo ""
 echo "==> 安装完成！"
 echo "    1. 编辑 ~/.claude/settings.json 填入 API Token"
 echo "    2. 编辑 ~/.claude/.mcp.json 填入 TAVILY_API_KEY 和 GITHUB_TOKEN"
 echo "    3. 编辑 ~/.codex/config.toml 填入 DEEPSEEK API Key"
-echo "    4. 安装 ccswitch 后运行 cccswitch sync"
+echo "    4. 编辑 ~/.continue/config.yaml 填入 DEEPSEEK API Key"
+echo "    5. 安装 ccswitch 后运行 cccswitch sync"
