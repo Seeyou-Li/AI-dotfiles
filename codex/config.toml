@@ -1,5 +1,42 @@
-model = "deepseek-v4-pro"
-# API Key 和 Base URL 由 cc-switch 统一管理
+model = "deepseek-v4-flash"
+model_provider = "deepseek"
+preferred_auth_method = "apikey"
+forced_login_method = "api"
+model_reasoning_effort = "high"
+model_catalog_json = "~/.codex/models.json"
 
 [projects."/home/csg"]
 trust_level = "trusted"
+
+[mcp_servers]
+
+[mcp_servers.memory]
+type = "stdio"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-memory"]
+
+[mcp_servers.sequential-thinking]
+type = "stdio"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+
+[mcp_servers.time]
+type = "stdio"
+command = "npx"
+args = ["-y", "time-mcp"]
+
+[mcp_servers.context7]
+type = "stdio"
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+
+[mcp_servers.fetch]
+type = "stdio"
+command = "npx"
+args = ["-y", "@mokei/mcp-fetch"]
+
+[model_providers.deepseek]
+name = "deepseek"
+base_url = "https://api.deepseek.com/"
+wire_api = "responses"
+experimental_bearer_token = "YOUR_DEEPSEEK_API_KEY"
