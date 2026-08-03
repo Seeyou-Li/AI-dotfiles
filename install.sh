@@ -38,12 +38,23 @@ if [ -d "$DOTFILES/cc-switch/skills" ]; then
 fi
 
 # --- Codex CLI ---
+mkdir -p ~/.codex
 if [ ! -f ~/.codex/config.toml ]; then
-  mkdir -p ~/.codex
   cp "$DOTFILES/codex/config.toml" ~/.codex/config.toml
-  cp "$DOTFILES/codex/models.json" ~/.codex/models.json
-  echo "  -> 已创建 ~/.codex/config.toml + models.json，请填入 API Key"
+  echo "  -> 已创建 ~/.codex/config.toml，请填入 API Key"
 fi
+if [ ! -f ~/.codex/models.json ]; then
+  cp "$DOTFILES/codex/models.json" ~/.codex/models.json
+fi
+if [ ! -f ~/.codex/AGENTS.md ]; then
+  cp "$DOTFILES/codex/AGENTS.md" ~/.codex/AGENTS.md
+fi
+# Codex skills：从 Claude skills 源复制（Codex 需要平铺目录）
+mkdir -p ~/.codex/skills
+cp -Lr "$DOTFILES/cc-switch/skills/"* ~/.codex/skills/ 2>/dev/null || true
+cp -Lr "$DOTFILES/claude/skills/embedded-code-review" ~/.codex/skills/ 2>/dev/null || true
+cp -Lr "$DOTFILES/claude/skills/skill-creator" ~/.codex/skills/ 2>/dev/null || true
+echo "  -> Codex skills 已复制（cc-switch + 手动 skills）"
 
 echo ""
 echo "==> 安装完成！"
