@@ -17,14 +17,14 @@ models:
       temperature: 0.0
       maxTokens: 4096
 
-# 独立 Tab 自动补全模型
+# 独立 Tab 自动补全模型（beta 端点支持 FIM 补全）
 tabAutocompleteModel:
   name: DeepSeek 补全
   provider: openai
   model: deepseek-v4-flash
-  apiBase: https://api.deepseek.com/v1
+  apiBase: https://api.deepseek.com/beta
   apiKey: YOUR_DEEPSEEK_API_KEY
-  useLegacyCompletionsEndpoint: false
+  useLegacyCompletionsEndpoint: true
   contextLength: 8192
   completionOptions:
     maxTokens: 256
