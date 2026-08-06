@@ -81,3 +81,16 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 - **Local variable comments**: 函数内局部变量声明必须加行尾注释说明用途。
 - **Blank line between functions**: 函数与函数定义之间必须空一行，用于区分。
 - **SVN commit before edit**: 修改代码前先提交当前版本到 SVN，确保 diff 干净不含未提交改动。修改后再提交时备注写明改动人。
+
+## 6. RTK（省 token 工具）
+
+本机装有 rtk（Rust Token Killer）CLI。读取/搜索类命令优先走 rtk，输出进入上下文前会被过滤压缩：
+
+- 读文件：`rtk read -l minimal <file>`
+- 搜索内容：`rtk grep <pattern> <path>`（不要用 `grep -o/-c`，rtk 不支持这些 flag）
+- 找文件：`rtk find ...`（支持原生 find 的 `-name`、`-type` 等）
+- Git 操作：`rtk git <subcmd>`；看 diff：`rtk diff`
+- JSON 查看：`rtk json`
+- rtk 不支持的命令（如 `du`、`df`、`ps`）直接执行，不要套 rtk
+
+需要完整原始输出时（如检查编码问题、精确行内容），改用原生命令并注意 rtk 的截断/压缩不适用。
