@@ -1,9 +1,8 @@
 model = "deepseek-v4-flash"
-model_provider = "deepseek"
-preferred_auth_method = "apikey"
-forced_login_method = "api"
-model_reasoning_effort = "high"
-model_catalog_json = "~/.codex/models.json"
+
+[env]
+OPENAI_API_KEY = "YOUR_DEEPSEEK_API_KEY"
+OPENAI_BASE_URL = "https://api.deepseek.com/v1"
 
 [projects."/home/csg"]
 trust_level = "trusted"
@@ -34,9 +33,3 @@ args = ["-y", "@upstash/context7-mcp"]
 type = "stdio"
 command = "npx"
 args = ["-y", "@mokei/mcp-fetch"]
-
-[model_providers.deepseek]
-name = "deepseek"
-base_url = "https://api.deepseek.com/"
-wire_api = "responses"
-experimental_bearer_token = "YOUR_DEEPSEEK_API_KEY"
