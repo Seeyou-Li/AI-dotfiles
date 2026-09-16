@@ -84,13 +84,50 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ## 6. RTK（省 token 工具）
 
-本机装有 rtk（Rust Token Killer）CLI。读取/搜索类命令优先走 rtk，输出进入上下文前会被过滤压缩：
+本机装有 rtk（Rust Token Killer）CLI，作用是过滤命令输出以省 token。**规则：所有 shell 命令都加 `rtk` 前缀**。
 
-- 读文件：`rtk read -l minimal <file>`
-- 搜索内容：`rtk grep <pattern> <path>`（不要用 `grep -o/-c`，rtk 不支持这些 flag）
-- 找文件：`rtk find ...`（支持原生 find 的 `-name`、`-type` 等）
-- Git 操作：`rtk git <subcmd>`；看 diff：`rtk diff`
-- JSON 查看：`rtk json`
-- rtk 不支持的命令（如 `du`、`df`、`ps`）直接执行，不要套 rtk
+- 常用：`rtk git status` / `rtk ls <dir>` / `rtk find ...` / `rtk grep <pattern> <path>` / `rtk read <file>` / `rtk json` / `rtk diff`
+- 链式命令每一段都加：`rtk git add . && rtk git commit -m "msg"`
+- 输出已被压缩，视为完整结果；多条相关命令合并成一次调用，减少轮次
+- `rtk grep` 不支持 `-o` / `-c` 这类 flag
+- 无过滤器的命令（`du`、`df`、`ps` 等）直接执行，不必套 `rtk`
+- 逃生舱：需要完整原始输出时用 `rtk proxy <cmd>`；跳过单条用 `RTK_DISABLED=1 <cmd>`
 
-需要完整原始输出时（如检查编码问题、精确行内容），改用原生命令并注意 rtk 的截断/压缩不适用。
+## 7. 编码风格：ponytail（懒资深开发）
+
+写或改代码时，按“最小可用”原则依次自问：
+
+1. 这东西需要存在吗？不需要就跳过，一行说明。（YAGNI）
+2. 项目里已有类似的？复用，别重写。
+3. 标准库能做？用它。
+4. 平台原生特性覆盖了？优先（CSS 优先于 JS，DB 约束优先于应用层代码）。
+5. 已装的依赖解决了？用它，不要为此新增依赖。
+6. 能一行？一行。
+7. 都不行：写最小可用代码。
+
+- 不做未被要求的抽象（单实现的接口、单产品的工厂、永不变的配置项）。
+- 删除优于新增，无聊优于聪明。
+- 小改动也要改在正确位置：改错地方的小改动等于第二个 bug。
+- 输出：代码在前，最多三行说明（跳过了什么 / 何时需要补）。不要长篇解释、功能巡览、设计说明。
+- 有明确取舍的简化，用 `ponytail:` 注释标出上限与升级路径。
+- 关闭：用户说 “stop ponytail” 或 “normal mode”。
+
+## 8. 省 token 规则
+
+实测用量：Top10 会话占 94% 开销；Codex 单次交互上下文是 Claude Code 的 5~10 倍。
+
+**AI 遵守：**
+
+1. 禁止整读大文件（`.asm`/`.map`/`.hex`/`.elf`/`.bin`/串口日志/`third_party/`）。
+   用 `grep`/`head`/`sed -n 'a,bp'` 取片段，或写脚本只打印结论。整读一次 = 几十万 token。
+2. 大输出在命令内聚合：`python3 -c`/`awk` 只打印计数、Top-N、摘要，不让原始输出进上下文。
+3. 多件独立的事合并成一次调用，减少轮次。
+4. 命令用裸名（`grep`/`ls`/`find`/`cat`/`git`）让 hook 改写成 `rtk xxx`；
+   不要用 `/usr/bin/xxx` 绝对路径绕过 RTK；带副作用的命令走 `rtk proxy <cmd>`。
+5. 优先用 skill / MCP（ponytail 压缩输出、context7 查文档），比反复解释便宜。
+
+**提醒用户（AI 无法代劳）：**
+
+- 任务切换就开新会话（单项收益最大）；长任务中途 `/compact`。
+- 用 `@文件` 给上下文——现在 selection/workspace/codebase/terminal 引用率全为 0。
+- 模型指定 `deepseek-v4-flash`，不要用 `auto`。
