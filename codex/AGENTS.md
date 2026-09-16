@@ -131,3 +131,11 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 - 任务切换就开新会话（单项收益最大）；长任务中途 `/compact`。
 - 用 `@文件` 给上下文——现在 selection/workspace/codebase/terminal 引用率全为 0。
 - 模型指定 `deepseek-v4-flash`，不要用 `auto`。
+
+## 9. 配置改动自动入库
+
+修改 `~/dotfiles/`、`~/.codex/`、`~/.claude/`、`~/.cc-switch/` 下的配置文件后，**自动**同步到 `~/dotfiles/` 并提交推送（`git -C ~/dotfiles add -A && commit && push`），不用等用户提醒。
+
+- 只改家目录里的生效副本时（如 `~/.codex/AGENTS.md`），先把内容 `cp` 回 `~/dotfiles/` 对应路径再提交。
+- 提交信息用 `<scope>: <描述>` 格式（参照 dotfiles 现有历史）。
+- **含密钥的模板（如 `codex/config.toml`）严禁带真实 key**，只能是 `YOUR_*_KEY` 占位符；提交前先 grep 校验。
