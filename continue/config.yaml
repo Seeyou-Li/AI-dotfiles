@@ -2,6 +2,14 @@ name: Main Config
 version: 1.0.0
 schema: v1
 
+systemMessage: |
+  编码规范：
+  - 函数内局部变量声明时必须初始化
+  - 函数间空一行
+  - 用注释屏蔽调试打印，不要删除
+  - 中文回复
+  - 称呼我为圣上
+
 models:
   # 对话模型
   - name: DeepSeek V4 Flash
@@ -16,18 +24,50 @@ models:
 
   # Tab 自动补全模型（beta 端点支持 FIM）
   - name: DeepSeek 补全
-    provider: openai
+    provider: deepseek
     model: deepseek-v4-flash
-    apiBase: https://api.deepseek.com/beta
+    apiBase: https://api.deepseek.com/
     apiKey: YOUR_DEEPSEEK_API_KEY
     roles:
       - autocomplete
     autocompleteOptions:
-      debounceDelay: 250
-      maxPromptTokens: 1024
-      modelTimeout: 150
+      debounceDelay: 100
+      maxPromptTokens: 600
+      modelTimeout: 8000
       maxSuffixPercentage: 0.2
       prefixPercentage: 0.3
+
+# 本地大模型
+  - name: LL Studio 本地模型
+    provider: openai
+    model: "qwen/qwen3.5-9b"
+    apiBase: http://192.168.33.76:1234/v1
+    roles:
+      - autocomplete
+      - chat
+      - edit
+      - apply
+    autocompleteOptions:
+      maxPromptTokens: 600                # 每次请求最大 token 数
+      prefixPercentage: 0.3             # 光标前代码占比，C 语言需要更多上文
+      contextLength: 16384               # 上下文窗口
+      debounceDelay: 150                  # 延迟触发（毫秒），加大让上下文收集完整
+      modelTimeout: 12000                 # 模型生成超时（毫秒）
+      maxSuffixPercentage: 0.25           # 光标后代码占比
+      useCache: false                     # 关闭缓存，每次都请求新补全
+      
+  # 服务器 Ollama deepseek-r1:14b（直连 11434，无需认证）
+  - name: Server DeepSeek R1 14B
+    provider: openai
+    model: deepseek-r1:14b
+    apiBase: http://192.168.33.216:11434/v1
+    contextLength: 131072
+    roles:
+      - chat
+      - edit
+      - apply
+
+
 
 context:
   - provider: code
