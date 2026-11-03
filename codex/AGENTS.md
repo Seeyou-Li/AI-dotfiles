@@ -80,7 +80,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 - **Local variable init**: 函数内局部变量（auto）声明时必须初始化（`= 0` / `= NULL` / `= {0}`），避免栈上随机值。
 - **Local variable comments**: 函数内局部变量声明必须加行尾注释说明用途。
 - **Blank line between functions**: 函数与函数定义之间必须空一行，用于区分。
-- **SVN commit before edit**: 修改代码前先提交当前版本到 SVN，确保 diff 干净不含未提交改动。修改后再提交时备注写明改动人。
+- **SVN commit policy**: 修改代码前先提交当前版本到 SVN，确保 diff 干净不含未提交改动。代码修改完成后不得自动提交 SVN；仅在用户明确要求提交后执行，提交备注写明改动人。
 
 ## 6. RTK（省 token 工具）
 
